@@ -1,8 +1,13 @@
-
+from pathlib import Path
 
 def tokeninze(paragraphs):
     #loop through the paragraph put unique words in a dictionary
-    unique_words = {}   
+    unique_words = set()   
+    words = paragraphs.split()
+    for word in words:
+        #for word in paragraph:
+        unique_words.add(word)
+
     return unique_words
     
 
@@ -40,8 +45,19 @@ def write(freqs):
     #write the frequency matrix to a file
     pass
 
+def read_file(filename):
+    file_data = ""
+    file_data= Path(filename).read_text()
+    #with open(filename, 'r') as f:
+    #    file_data = f.read()
+
+    return file_data
+
 def main():
-    pass
+    fd = read_file('Project4_paragraphs.txt')
+    print(type(fd))
+    token = tokeninze(fd)
+    print(token)
 
 if __name__ == '__main__':
     main()

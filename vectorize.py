@@ -362,7 +362,8 @@ def frequency(words):
             unique_words[word] += 1
         else:
             unique_words[word] = 1
-
+    
+    return unique_words
 
 def write(freqs):
     #write the frequency matrix to a file
@@ -377,22 +378,46 @@ def read_file(filename):
     #paragraphs
     splat = file_data.split('\n')
 
-    return splat
+    return splat,file_data
 
-def main():
-    paragraph_list = read_file('Project4_paragraphs.txt')
-    stop_words = read_file('Project4_stop_words.txt')
+def paragraph_freq_vectors(paragraph_list,stop_words):
     ported_stemmed_pars = []
-    
-    for paragraph in paragraph_list:
+    feature_vec =[]
+
+    for idx,paragraph in enumerate(paragraph_list):
         paragraph = remove_special_characters(paragraph)
         paragraph = remove_numbers(paragraph)
         tokenized_par = tokenize(paragraph)
         lower_toke = to_lower(tokenized_par)
         stop_words_removed = remove_stop_words(lower_toke,stop_words)
         ported_stemmed_pars.append(stemmer(stop_words_removed))
-    
-    print(ported_stemmed_pars[0])
+        feature_vec.append(frequency(ported_stemmed_pars[idx]))
+
+    return ported_stemmed_pars,feature_vec
+
+def doc_freq_vectors(paragraph_list,stop_words):
+    ported_stemmed_pars = []
+    feature_vec =[]
+
+    #for idx,paragraph in enumerate(paragraph_list):
+    paragraph_list = remove_special_characters(paragraph_list)
+    paragraph_list = remove_numbers(paragraph_list)
+    tokenized_par = tokenize(paragraph_list)
+    lower_toke = to_lower(tokenized_par)
+    stop_words_removed = remove_stop_words(lower_toke,stop_words)
+    ported_stemmed_pars.append(stemmer(stop_words_removed))
+    feature_vec.append(frequency(ported_stemmed_pars[0]))
+
+    return ported_stemmed_pars,feature_vec
+
+
+def main():
+    paragraph_list,entire_doc = read_file('Project4_paragraphs.txt')
+    stop_words = read_file('Project4_stop_words.txt')
+
+    ported_stemmed_paragraphs,feature_vector_pars = paragraph_freq_vectors(paragraph_list,stop_words)
+    ps_doc,ft_vec_doc = doc_freq_vectors(entire_doc,stop_words)
+    print(ft_vec_doc) 
 
 if __name__ == '__main__':
     main()

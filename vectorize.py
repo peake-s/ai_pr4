@@ -367,9 +367,20 @@ def frequency(words):
     
     return unique_words
 
-def write(freqs):
+def paragraph_list(num_pars):
+    l = []
+    for i in range(num_pars):
+        l.append(f'paragraph {i}')
+    
+    return l
+
+def write(freqs, num_pars):
     df = pd.DataFrame(freqs)
-    df.to_csv('TDM.csv',sep=',')
+    #df['paragraph #'] = paragraph_list(num_pars)   
+    print(df['on'])
+    df.drop('on',axis=1)  
+    df.insert(0,'paragraph #',paragraph_list(num_pars))    
+    df.to_csv('TDM.csv',sep=',',index=False)
 
 def read_file(filename):
     file_data = []
@@ -407,20 +418,21 @@ def doc_freq_vectors(paragraph_list,stop_words):
     tokenized_par = tokenize(paragraph_list)
     lower_toke = to_lower(tokenized_par)
     stop_words_removed = remove_stop_words(lower_toke,stop_words)
-    ported_stemmed_pars.append(stemmer(stop_words_removed))
-    feature_vec.append(frequency(ported_stemmed_pars[0]))
+    ported_stemmed_pars = stemmer(stop_words_removed)
+    feature_vec = frequency(ported_stemmed_pars)
 
     return ported_stemmed_pars,feature_vec
 
 
 def main():
     paragraph_list,entire_doc = read_file('Project4_paragraphs.txt')
-    stop_words = read_file('Project4_stop_words.txt')
-
+    stop_words,_ = read_file('Project4_stop_words.txt')
+    num_pars = len(paragraph_list)
+    print(stop_words)
     ported_stemmed_paragraphs,feature_vector_pars = paragraph_freq_vectors(paragraph_list,stop_words)
     ps_doc,ft_vec_doc = doc_freq_vectors(entire_doc,stop_words)
 
-    write(feature_vector_pars) 
+    write(feature_vector_pars,num_pars) 
 
 if __name__ == '__main__':
     main()

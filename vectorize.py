@@ -1,3 +1,5 @@
+import pandas as pd
+
 class PorterStemmer:
     
     def __init__(self):
@@ -366,8 +368,8 @@ def frequency(words):
     return unique_words
 
 def write(freqs):
-    #write the frequency matrix to a file
-    pass
+    df = pd.DataFrame(freqs)
+    df.to_csv('TDM.csv',sep=',')
 
 def read_file(filename):
     file_data = []
@@ -417,7 +419,8 @@ def main():
 
     ported_stemmed_paragraphs,feature_vector_pars = paragraph_freq_vectors(paragraph_list,stop_words)
     ps_doc,ft_vec_doc = doc_freq_vectors(entire_doc,stop_words)
-    print(ft_vec_doc) 
+
+    write(feature_vector_pars) 
 
 if __name__ == '__main__':
     main()

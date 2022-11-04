@@ -347,7 +347,12 @@ def remove_stop_words(words,stopwords):
 
 def stemmer(paragraph):
     port = PorterStemmer()
-    pass
+    #stem (word,0,len(word-1)
+    stemmed_arr = []
+    for word in paragraph:
+        stemmed_arr.append(port.stem(word, 0,len(word)-1))
+    
+    return stemmed_arr
 
 def frequency(words):
     unique_words = {}   
@@ -378,15 +383,16 @@ def main():
     paragraph_list = read_file('Project4_paragraphs.txt')
     stop_words = read_file('Project4_stop_words.txt')
     ported_stemmed_pars = []
-    p = PorterStemmer()
-    '''
+    
     for paragraph in paragraph_list:
         paragraph = remove_special_characters(paragraph)
         paragraph = remove_numbers(paragraph)
         tokenized_par = tokenize(paragraph)
         lower_toke = to_lower(tokenized_par)
         stop_words_removed = remove_stop_words(lower_toke,stop_words)
-    '''
+        ported_stemmed_pars.append(stemmer(stop_words_removed))
+    
+    print(ported_stemmed_pars[0])
 
 if __name__ == '__main__':
     main()

@@ -346,6 +346,10 @@ class PorterStemmer:
 
 if __name__ == '__main__':
     p = PorterStemmer()
+    w = 'ponies'
+    x = p.stem(w,0,len(w)-1)
+    print(x)
+    '''
     if len(sys.argv) > 1:
         for f in sys.argv[1:]:
             infile = open(f, 'r')
@@ -364,4 +368,5 @@ if __name__ == '__main__':
                             word = ''
                         output += c.lower()
                 print (output)
-            infile.close()
+                '''
+            #infile.close()

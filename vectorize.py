@@ -319,7 +319,7 @@ def tokenize(paragraphs):
     
 
 def remove_special_characters(paragraphs):
-    special_characters = ['.', ',','?', '"','"', "(",")", "<br", "/>", ",","'","'",'!']
+    special_characters = ['.', ',','?', '"','"', "(",")", "<br", "/>", ",","'","'",'!','&']
    
     removed_characters = paragraphs
     for i in special_characters:
@@ -343,7 +343,12 @@ def to_lower(paragraph):
 
 def remove_stop_words(words,stopwords):
     removed = []
-    removed = [word for word in words if word not in stopwords]
+    #print(stopwords)
+    #removed = [word for word in words if word not in stopwords]
+    for word in words:
+        if word not in stopwords:
+            #print(word)
+            removed.append(word)
 
     return removed
 
@@ -376,8 +381,6 @@ def paragraph_list(num_pars):
 
 def write(freqs, num_pars):
     df = pd.DataFrame(freqs)
-    #not sure why on made it through, but ill drop it here
-    df.drop('on',axis=1,inplace=True)  
     df.insert(0,'paragraph #',paragraph_list(num_pars))    
     df.to_csv('TDM.csv',sep=',',index=False)
 
@@ -430,6 +433,8 @@ def main():
 
     ported_stemmed_paragraphs,feature_vector_pars = paragraph_freq_vectors(paragraph_list,stop_words)
     ps_doc,ft_vec_doc = doc_freq_vectors(entire_doc,stop_words)
+
+    print(ft_vec_doc)
 
     write(feature_vector_pars,num_pars) 
 

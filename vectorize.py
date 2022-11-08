@@ -319,7 +319,7 @@ def tokenize(paragraphs):
     
 
 def remove_special_characters(paragraphs):
-    special_characters = ['.', ',','?', '"','"', "(",")", "<br", "/>", ",","'","'",'!','&']
+    special_characters = ['.', ',','?', '"','"', "(",")", "<br", "/>", ",","'","'",'!','&','/','\\','-',':','^','$','#','@']
    
     removed_characters = paragraphs
     for i in special_characters:

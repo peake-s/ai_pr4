@@ -391,7 +391,7 @@ def read_file(filename):
         file_data = f.read()
 
     #paragraphs
-    splat = file_data.split('\n')
+    splat = file_data.split('\n\n')
 
     return splat,file_data
 
@@ -430,11 +430,11 @@ def main():
     paragraph_list,entire_doc = read_file('Project4_paragraphs.txt')
     stop_words,_ = read_file('Project4_stop_words.txt')
     num_pars = len(paragraph_list)
-
+    print(paragraph_list[2])
     ported_stemmed_paragraphs,feature_vector_pars = paragraph_freq_vectors(paragraph_list,stop_words)
     ps_doc,ft_vec_doc = doc_freq_vectors(entire_doc,stop_words)
 
-    print(ft_vec_doc)
+    #print(ft_vec_doc)
 
     write(feature_vector_pars,num_pars) 
 
